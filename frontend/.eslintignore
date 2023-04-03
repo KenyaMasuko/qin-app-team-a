@@ -1,0 +1,3 @@
+next.config.js
+*.config.js
+!.storybook
