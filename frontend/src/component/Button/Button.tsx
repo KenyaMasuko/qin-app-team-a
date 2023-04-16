@@ -1,4 +1,3 @@
-import React from "react";
 import "./button.css";
 
 interface ButtonProps {
@@ -30,10 +29,9 @@ interface ButtonProps {
 export const Button = ({
   primary = false,
   size = "medium",
-  backgroundColor,
   label,
   ...props
-}: ButtonProps) => {
+}: ButtonProps): JSX.Element => {
   const mode = primary
     ? "storybook-button--primary"
     : "storybook-button--secondary";
@@ -46,11 +44,6 @@ export const Button = ({
       {...props}
     >
       {label}
-      <style jsx>{`
-        button {
-          background-color: ${backgroundColor};
-        }
-      `}</style>
     </button>
   );
 };
