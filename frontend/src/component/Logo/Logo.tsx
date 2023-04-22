@@ -2,7 +2,7 @@ import { type FC } from "react";
 import { createStyles } from "@mantine/core";
 
 type LogoProps = {
-  size: "small" | "medium" | "large";
+  size?: "small" | "medium" | "large";
 };
 
 const useStyles = createStyles<string, { size: string }>((theme, params) => ({
