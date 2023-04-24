@@ -2,7 +2,7 @@ import { type ReactNode } from "react";
 import { MantineProvider } from "@mantine/core";
 import { type AppProps } from "next/app";
 import Head from "next/head";
-import { theme } from "@/lib/mantine/theme";
+import { GlobalStyleProvider, customTheme } from "@/lib/mantine";
 
 export default function App({ Component, pageProps }: AppProps): ReactNode {
   return (
@@ -15,9 +15,11 @@ export default function App({ Component, pageProps }: AppProps): ReactNode {
         />
       </Head>
 
-      <MantineProvider withGlobalStyles withNormalizeCSS theme={theme}>
-        <Component {...pageProps} />
-      </MantineProvider>
+      <GlobalStyleProvider>
+        <MantineProvider theme={customTheme}>
+          <Component {...pageProps} />
+        </MantineProvider>
+      </GlobalStyleProvider>
     </>
   );
 }
