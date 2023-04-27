@@ -1,8 +1,18 @@
 import { type ReactNode } from "react";
 import { Center, Title } from "@mantine/core";
 import Head from "next/head";
+import { useRecipe } from "@/hooks/useRecipe";
 
 export default function Home(): ReactNode {
+  const { data, isLoading, isError } = useRecipe();
+  console.log(data, isLoading, isError);
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError || !data) {
+    return <div>Error occurred while fetching data</div>;
+  }
   return (
     <>
       <Head>
@@ -12,7 +22,9 @@ export default function Home(): ReactNode {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Center>
-        <Title sx={{ color: "red" }}>Hello World</Title>
+        <Title sx={{ color: "red" }}>{`Hello World ${
+          data && data.recipe ? data.recipe : "たかし"
+        }`}</Title>
       </Center>
     </>
   );
