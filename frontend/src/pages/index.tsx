@@ -1,18 +1,24 @@
-import { type ReactNode } from "react";
-import { Center, Title } from "@mantine/core";
+import { useState, type ReactNode } from "react";
+import { Button, Center, Flex, Title } from "@mantine/core";
 import Head from "next/head";
 import { useRecipe } from "@/hooks/useRecipe";
 
 export default function Home(): ReactNode {
   const { data, isLoading, isError } = useRecipe();
-  console.log(data, isLoading, isError);
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  const [recipe, setRecipe] = useState("");
 
-  if (isError || !data) {
-    return <div>Error occurred while fetching data</div>;
-  }
+  const getRecipe = async () => {
+    if (isLoading) {
+      setRecipe("Loarding");
+      return;
+    }
+    if (isError || !data) {
+      setRecipe("何の成果も！！ 得られませんでした！！");
+      return;
+    }
+    setRecipe(data.recipe);
+  };
+
   return (
     <>
       <Head>
@@ -21,10 +27,22 @@ export default function Home(): ReactNode {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Center>
-        <Title sx={{ color: "red" }}>{`Hello World ${
-          data && data.recipe ? data.recipe : "たかし"
-        }`}</Title>
+      <Center maw={1000} mx="auto">
+        <Flex
+          mih={50}
+          gap="xl"
+          justify="center"
+          align="center"
+          direction="column"
+          wrap="nowrap"
+        >
+          <Title
+            sx={{ color: "red", transitionDuration: "1000ms" }}
+          >{`Hello World ${recipe ? recipe : "たかし"}`}</Title>
+          <Button color="yellow" onClick={getRecipe}>
+            コレシピ！！！
+          </Button>
+        </Flex>
       </Center>
     </>
   );
