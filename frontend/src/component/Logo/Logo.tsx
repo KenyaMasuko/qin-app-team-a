@@ -2,7 +2,7 @@ import { type FC } from "react";
 import { createStyles } from "@mantine/core";
 
 type LogoProps = {
-  size: "small" | "medium" | "large";
+  size?: "small" | "medium" | "large";
 };
 
 const useStyles = createStyles<string, { size: string }>((theme, params) => ({
@@ -13,10 +13,10 @@ const useStyles = createStyles<string, { size: string }>((theme, params) => ({
     padding: params.size === "small" ? 10 : params.size === "medium" ? 15 : 20,
     fontSize:
       params.size === "small"
-        ? theme.fontSizes.xs
+        ? "10px"
         : params.size === "medium"
-        ? theme.fontSizes.md
-        : theme.fontSizes.lg,
+        ? "15px"
+        : "20px",
     fontFamily: theme.fontFamily,
     display: "grid",
     placeContent: "center",
