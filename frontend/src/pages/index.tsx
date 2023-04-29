@@ -1,25 +1,40 @@
 import { useState, type ReactNode } from "react";
-import { Button, Center, Flex, Image, Title } from "@mantine/core";
+import { Button, Center, Flex, Image, Text, Title } from "@mantine/core";
 import Head from "next/head";
 import { useRecipe } from "@/hooks/useRecipe";
 
 export default function Home(): ReactNode {
-  const { data, isLoading, isError } = useRecipe();
-  const [recipe, setRecipe] = useState("");
-  const [recipeImage, setRecipeImage] = useState("");
+  const keywords = "肉料理 韓国料理 味濃いめ";
+  const { data, isLoading, isError } = useRecipe(keywords);
+  const [recipe, setRecipe] = useState<{
+    name: string | undefined;
+    imageUrl: string | undefined;
+    text: string | undefined;
+  }>({
+    name: undefined,
+    imageUrl: undefined,
+    text: undefined,
+  });
 
   const getRecipe = async () => {
     if (isLoading) {
-      setRecipe("Loarding");
+      setRecipe({
+        name: "Loading...",
+        imageUrl: undefined,
+        text: undefined,
+      });
       return;
     }
     if (isError || !data) {
-      setRecipe("何の成果も！！ 得られませんでした！！");
+      setRecipe({
+        name: "何の成果も！！得られませんでした！！",
+        imageUrl: undefined,
+        text: undefined,
+      });
       return;
     }
-    setRecipe(data.recipe);
-    setRecipeImage(data.imageUrl);
-    console.log(data)
+    setRecipe(data);
+    console.log(data);
   };
 
   return (
@@ -41,16 +56,43 @@ export default function Home(): ReactNode {
         >
           <Title
             sx={{ color: "red", transitionDuration: "1000ms" }}
-          >{`Hello World ${recipe ? recipe : "たかし"}`}</Title>
-          {recipeImage ? (
+          >{`Hello World ${recipe.name ? recipe.name : "たかし"}`}</Title>
+          {recipe.imageUrl ? (
             <Image
               maw={240}
               mx="auto"
               radius="md"
-              src={recipeImage}
+              src={recipe.imageUrl}
               alt="recipe image"
             />
           ) : null}
+          <Text
+            variant="gradient"
+            gradient={{ from: "indigo", to: "cyan", deg: 45 }}
+            sx={{ fontFamily: "Greycliff CF, sans-serif" }}
+            ta="center"
+            fz="xl"
+            fw={700}
+          >
+            {recipe.text ? recipe.text : "Indigo cyan gradient"}
+          </Text>
+          {/* <div
+            style={{
+              fontFamily: "Greycliff CF, sans-serif",
+              textAlign: "center",
+              fontSize: "1.25rem",
+              fontWeight: 700,
+              color: "indigo",
+              background: "linear-gradient(45deg, indigo, cyan)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}
+            dangerouslySetInnerHTML={{
+              __html: recipe.details
+                ? recipe.details.replace(/\n/g, "<br />")
+                : "Indigo cyan gradient",
+            }}
+          /> */}
           <Button color="yellow" onClick={getRecipe}>
             コレシピ！！！
           </Button>
