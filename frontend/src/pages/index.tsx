@@ -1,11 +1,12 @@
 import { useState, type ReactNode } from "react";
-import { Button, Center, Flex, Title } from "@mantine/core";
+import { Button, Center, Flex, Image, Title } from "@mantine/core";
 import Head from "next/head";
 import { useRecipe } from "@/hooks/useRecipe";
 
 export default function Home(): ReactNode {
   const { data, isLoading, isError } = useRecipe();
   const [recipe, setRecipe] = useState("");
+  const [recipeImage, setRecipeImage] = useState("");
 
   const getRecipe = async () => {
     if (isLoading) {
@@ -17,6 +18,8 @@ export default function Home(): ReactNode {
       return;
     }
     setRecipe(data.recipe);
+    setRecipeImage(data.imageUrl);
+    console.log(data)
   };
 
   return (
@@ -39,6 +42,15 @@ export default function Home(): ReactNode {
           <Title
             sx={{ color: "red", transitionDuration: "1000ms" }}
           >{`Hello World ${recipe ? recipe : "たかし"}`}</Title>
+          {recipeImage ? (
+            <Image
+              maw={240}
+              mx="auto"
+              radius="md"
+              src={recipeImage}
+              alt="recipe image"
+            />
+          ) : null}
           <Button color="yellow" onClick={getRecipe}>
             コレシピ！！！
           </Button>
