@@ -50,21 +50,6 @@ async def translate_recipe_to_english(recipe: str) -> str:
     return query
 
 
-# # レシピの詳細を出力
-# async def get_recipe_details_gpt(recipe: str) -> str:
-#     prompt = f"レシピ名 '{recipe}' のレシピの詳細を「材料」「作り方」「ポイント」のフォーマットで出力してください。 ・なるべく500tokens以内で出力してください。 ・改行は \n で表現してください。"
-#     response = openai.Completion.create(
-#         engine="text-davinci-003",
-#         prompt=prompt,
-#         max_tokens=1000,
-#         n=1,
-#         stop=None,
-#         temperature=0.5,
-#     )
-#     recipe_details = response.choices[0].text.strip()
-#     return recipe_details
-
-
 async def get_recipe_details_gpt(recipe: str) -> dict:
     prompt = f"レシピ名 '{recipe}' のレシピの詳細を「材料」「作り方」「ポイント」のフォーマットで出力してください。材料と作り方は番号付きのリスト形式で出力してください。100トークン以内でまとめてください。 例: 材料: 1. <材料1> 2. <材料2>... 作り方: 1. <ステップ1> 2. <ステップ2>... ポイント: 1. <ポイント1> 2. <ポイント2>..."
     response = openai.Completion.create(
@@ -87,30 +72,6 @@ async def get_recipe_details_gpt(recipe: str) -> dict:
     #     "steps": extract_list(recipe_text, "作り方:"),
     #     "tips": extract_list(recipe_text, "ポイント:"),
     # }
-    # print("recipe_dict", recipe_dict)  # ログ出力
-    # # 正規表現を使ってセクションを抽出
-    # ingredients_match = re.findall("材料:\s*(.+?)作り方:", recipe_details, re.DOTALL)
-    # steps_match = re.findall("作り方:\s*(.+?)ポイント:", recipe_details, re.DOTALL)
-    # tips_match = re.findall("ポイント:\s*(.+)", recipe_details, re.DOTALL)
-
-    # print("ingredients_match:", ingredients_match)  # ログ出力
-    # print("steps_match:", steps_match)  # ログ出力
-    # print("tips_match:", tips_match)  # ログ出力
-
-    # ingredients = re.findall(r"\d+\.\s*(.+)", ingredients_match[0]) if ingredients_match else []
-    # steps = re.findall(r"\d+\.\s*(.+)", steps_match[0]) if steps_match else []
-    # tips = re.findall(r"\d+\.\s*(.+)", tips_match[0]) if tips_match else []
-
-    # # JSON形式に変換
-    # recipe_json = {
-    #     "ingredients": [
-    #         ingredient for idx, ingredient in enumerate(ingredients) if idx % 2 != 0
-    #     ],
-    #     "steps": [step for idx, step in enumerate(steps) if idx % 2 != 0],
-    #     "tips": [tip for idx, tip in enumerate(tips) if idx % 2 != 0],
-    # }
-
-    # print("recipe_json:", recipe_json)  # ログ出力
 
     return recipe_text
 

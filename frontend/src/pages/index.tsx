@@ -54,12 +54,13 @@ export default function Home(): ReactNode {
           direction="column"
           wrap="nowrap"
         >
-          <Title
-            sx={{ color: "red", transitionDuration: "1000ms" }}
-          >{`Hello World ${recipe.name ? recipe.name : "たかし"}`}</Title>
+          <Title sx={{ color: "red" }}>{`Hello World ${
+            recipe.name ? recipe.name : "たかし"
+          }`}</Title>
           {recipe.imageUrl ? (
             <Image
-              maw={240}
+              maw={500}
+              h="auto"
               mx="auto"
               radius="md"
               src={recipe.imageUrl}
@@ -76,23 +77,6 @@ export default function Home(): ReactNode {
           >
             {recipe.text ? recipe.text : "Indigo cyan gradient"}
           </Text>
-          {/* <div
-            style={{
-              fontFamily: "Greycliff CF, sans-serif",
-              textAlign: "center",
-              fontSize: "1.25rem",
-              fontWeight: 700,
-              color: "indigo",
-              background: "linear-gradient(45deg, indigo, cyan)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-            }}
-            dangerouslySetInnerHTML={{
-              __html: recipe.details
-                ? recipe.details.replace(/\n/g, "<br />")
-                : "Indigo cyan gradient",
-            }}
-          /> */}
           <Button color="yellow" onClick={getRecipe}>
             コレシピ！！！
           </Button>
