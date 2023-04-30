@@ -10,8 +10,11 @@ const fetcher = async (url: string) => {
   return response.json();
 };
 
-export const useRecipe = () => {
-  const { data, error } = useSWR(`/api/recipe`, fetcher);
+export const useRecipe = (keywords: string) => {
+  const { data, error } = useSWR(
+    `/api/recipe?keywords=${encodeURIComponent(keywords)}`,
+    fetcher
+  );
 
   return {
     data: data,
