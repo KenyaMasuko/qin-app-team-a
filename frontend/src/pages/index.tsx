@@ -1,40 +1,53 @@
-import { useState, type ReactNode } from "react";
+import { useState, ReactNode } from "react";
 import { Button, Center, Flex, Image, Text, Title } from "@mantine/core";
 import Head from "next/head";
-import { useRecipe } from "@/hooks/useRecipe";
 
 export default function Home(): ReactNode {
-  const keywords = "肉料理 韓国料理 味濃いめ";
-  const { data, isLoading, isError } = useRecipe(keywords);
+  const [keywords, setKeywords] = useState<string | undefined>(undefined);
   const [recipe, setRecipe] = useState<{
     name: string | undefined;
     imageUrl: string | undefined;
-    text: string | undefined;
+    text:
+      | {
+          ingredients: { name: string; amount: string }[];
+          steps: string[];
+          tips: string[];
+        }
+      | undefined;
   }>({
     name: undefined,
     imageUrl: undefined,
     text: undefined,
   });
 
+  const [error, setError] = useState<Error | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
   const getRecipe = async () => {
-    if (isLoading) {
-      setRecipe({
-        name: "Loading...",
-        imageUrl: undefined,
-        text: undefined,
-      });
-      return;
-    }
-    if (isError || !data) {
+    setKeywords("肉料理 韓国料理 味濃いめ");
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      if (!keywords) return;
+      const response = await fetch(
+        `/api/recipe?keywords=${encodeURIComponent(keywords)}`
+      );
+      if (!response.ok) {
+        throw new Error("An error occurred while fetching the data.");
+      }
+      const newData = await response.json();
+      setRecipe(newData);
+    } catch (error) {
+      setError(error as Error);
       setRecipe({
         name: "何の成果も！！得られませんでした！！",
         imageUrl: undefined,
         text: undefined,
       });
-      return;
+    } finally {
+      setIsLoading(false);
     }
-    setRecipe(data);
-    console.log(data);
   };
 
   return (
@@ -60,26 +73,62 @@ export default function Home(): ReactNode {
           {recipe.imageUrl ? (
             <Image
               maw={500}
-              h="auto"
+              h={500}
+              mah={500}
               mx="auto"
+              fit="cover"
               radius="md"
               src={recipe.imageUrl}
               alt="recipe image"
             />
           ) : null}
-          <Text
-            variant="gradient"
-            gradient={{ from: "indigo", to: "cyan", deg: 45 }}
-            sx={{ fontFamily: "Greycliff CF, sans-serif" }}
-            ta="center"
-            fz="xl"
-            fw={700}
-          >
-            {recipe.text ? recipe.text : "Indigo cyan gradient"}
-          </Text>
+          {recipe.text?.ingredients.map((ingredient, index) => (
+            <Text
+              variant="gradient"
+              gradient={{ from: "indigo", to: "cyan", deg: 45 }}
+              sx={{
+                fontFamily: "Greycliff CF, sans-serif",
+                overflow: "hidden",
+              }}
+              ta="left"
+              fz="xl"
+              fw={700}
+              key={ingredient.name}
+            >
+              {`${index + 1}:  ${ingredient.name} ${ingredient.amount}`}
+            </Text>
+          ))}
+          {recipe.text?.steps.map((step, index) => (
+            <Text
+              variant="gradient"
+              gradient={{ from: "teal", to: "lime", deg: 45 }}
+              sx={{ fontFamily: "Greycliff CF, sans-serif" }}
+              ta="left"
+              fz="xl"
+              fw={700}
+              key={step}
+            >
+              {`${index + 1}:  ${step}`}
+            </Text>
+          ))}
+          {recipe.text?.tips.map((tip, index) => (
+            <Text
+              variant="gradient"
+              gradient={{ from: "yellow", to: "", deg: 45 }}
+              sx={{ fontFamily: "Greycliff CF, sans-serif" }}
+              ta="left"
+              fz="xl"
+              fw={700}
+              key={tip}
+            >
+              {`${index + 1}:  ${tip}`}
+            </Text>
+          ))}
           <Button color="yellow" onClick={getRecipe}>
             コレシピ！！！
           </Button>
+          {isLoading && <p>Loading...</p>}
+          {error && <p>Error: {error.message}</p>}
         </Flex>
       </Center>
     </>

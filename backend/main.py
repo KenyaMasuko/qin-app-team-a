@@ -1,9 +1,12 @@
 import re
 import openai
-from fastapi import FastAPI, Query
+from fastapi import FastAPI, Query, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 import os
+from typing import Union
+import logging
+import uvicorn
 
 
 app = FastAPI()
@@ -18,6 +21,12 @@ app.add_middleware(
 load_dotenv()
 openai_api_key = os.getenv("OPENAI_API_KEY")
 openai.api_key = openai_api_key
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="127.0.0.1", port=8000, log_level="info", reload=True)
 
 
 # レシピ名を出力
@@ -50,39 +59,83 @@ async def translate_recipe_to_english(recipe: str) -> str:
     return query
 
 
-async def get_recipe_details_gpt(recipe: str) -> dict:
-    prompt = f"レシピ名 '{recipe}' のレシピの詳細を「材料」「作り方」「ポイント」のフォーマットで出力してください。材料と作り方は番号付きのリスト形式で出力してください。100トークン以内でまとめてください。 例: 材料: 1. <材料1> 2. <材料2>... 作り方: 1. <ステップ1> 2. <ステップ2>... ポイント: 1. <ポイント1> 2. <ポイント2>..."
+# レシピの詳細「材料」「作り方」「ポイント」を出力
+async def get_recipe_details_gpt(recipe: str) -> Union[str, dict]:
+    logger.info("get_recipe_details_gpt started")
+    prompt = f"レシピ名 '{recipe}' のレシピの詳細を「材料」「作り方」「ポイント」のフォーマットで出力してください。材料と作り方は番号付きのリスト形式で出力してください。 例:材料:1.<ingredients.name1>:<ingredients.amount1>2. <ingredients.name2>:<ingredients.amount2>...作り方:1.<step1>2.<step2>...ポイント:1.<point1>2.<point2>..."
     response = openai.Completion.create(
         engine="text-davinci-003",
         prompt=prompt,
-        max_tokens=100,
+        max_tokens=1000,
         n=1,
         stop=None,
-        temperature=0.5,
+        temperature=0.2,
     )
+    if "error" in response.choices[0].text.strip():
+        return "Error: Unable to generate recipe details. Please try again."
+
     recipe_text = response.choices[0].text.strip()
     print("recipe_text:", recipe_text)  # ログ出力
 
-    # def extract_list(text, keyword):
-    #     split_text = text.split(keyword)
-    #     return [item.strip() for item in split_text[1].split("\n") if item.strip()]
+    def extract_list(text, keyword):
+        split_text = re.split(f"{keyword}\s*?", text)
+        if len(split_text) < 2:
+            return []
 
-    # recipe_dict = {
-    #     "ingredients": extract_list(recipe_text, "材料:"),
-    #     "steps": extract_list(recipe_text, "作り方:"),
-    #     "tips": extract_list(recipe_text, "ポイント:"),
-    # }
+        list_items = [
+            item.strip() for item in split_text[1].split("\n") if item.strip()
+        ]
 
-    return recipe_text
+        result = []
+        for item in list_items:
+            match = re.match(r"\d+\.\s*(.*)", item)
+            if match:
+                item = match.group(1).strip()
+            else:
+                continue
+
+            if keyword == "材料:" and ":" in item:
+                name, amount = item.split(":", 1)
+                name = name.strip()
+                amount = amount.strip()
+                result.append({"name": name, "amount": amount})
+            elif keyword == "作り方:":
+                result.append(item)
+            elif keyword == "ポイント:":
+                result.append(item)
+            else:
+                continue
+
+        return result
+
+    recipe_dict = {
+        "ingredients": extract_list(recipe_text, "材料:"),
+        "steps": extract_list(recipe_text, "作り方:"),
+        "tips": extract_list(recipe_text, "ポイント:"),
+    }
+
+    print("recipe_dict:", recipe_dict)  # ログ出力
+
+    logger.info("get_recipe_details_gpt finished")
+    return recipe_dict
 
 
 @app.get("/api/recipe")
 async def recipe(keywords: str = Query(None)):
-    recommended_recipe = await get_recipe_gpt(keywords)
-    query_for_unsplash = await translate_recipe_to_english(recommended_recipe)
-    recipe_details = await get_recipe_details_gpt(recommended_recipe)
-    return {
-        "name": recommended_recipe,
-        "imageUrl": f"https://source.unsplash.com/featured/?{query_for_unsplash}",
-        "text": recipe_details,
-    }
+    try:
+        print("1")
+        recommended_recipe = await get_recipe_gpt(keywords)
+        print("2")
+        query_for_unsplash = await translate_recipe_to_english(recommended_recipe)
+        print("3")
+        recipe_details = await get_recipe_details_gpt(recommended_recipe)
+        print("4")
+
+        return {
+            "name": recommended_recipe,
+            "imageUrl": f"https://source.unsplash.com/featured/?{query_for_unsplash}",
+            "text": recipe_details,
+        }
+    except Exception as e:
+        logger.error(f"Error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
