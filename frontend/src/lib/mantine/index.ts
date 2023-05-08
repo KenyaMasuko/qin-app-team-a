@@ -1,2 +1,2 @@
-export { customTheme } from "@/lib/mantine/customTheme";
-export { GlobalStyleProvider } from "@/lib/mantine/GlobalStyleProvider";
+export { customTheme } from "./customTheme";
+export { GlobalStyleProvider } from "./GlobalStyleProvider";
