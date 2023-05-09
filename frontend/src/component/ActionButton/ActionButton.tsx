@@ -7,7 +7,7 @@ type ActionButtonProps = {
    */
   children: React.ReactNode;
   /**
-   * label
+   * disabled
    */
   disabled: boolean;
 };
