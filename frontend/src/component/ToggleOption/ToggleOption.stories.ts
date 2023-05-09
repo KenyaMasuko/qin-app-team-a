@@ -16,13 +16,5 @@ type Story = StoryObj<typeof ToggleOption>;
 export const Default: Story = {
   args: {
     children: "肉料理",
-    checked: false,
-  },
-};
-
-export const Checked: Story = {
-  args: {
-    children: "肉料理",
-    checked: true,
   },
 };
