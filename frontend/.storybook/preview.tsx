@@ -1,5 +1,5 @@
 import React from "react";
-import { Center, MantineProvider } from "@mantine/core";
+import { MantineProvider } from "@mantine/core";
 import { GlobalStyleProvider, customTheme } from "../src/lib/mantine";
 
 function ThemeWrapper(props: { children: React.ReactNode }) {
