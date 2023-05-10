@@ -1,11 +1,18 @@
 import React from "react";
-import { MantineProvider } from "@mantine/core";
+import { Center, MantineProvider } from "@mantine/core";
 import { GlobalStyleProvider, customTheme } from "../src/lib/mantine";
 
 function ThemeWrapper(props: { children: React.ReactNode }) {
   return (
     <GlobalStyleProvider>
-      <MantineProvider theme={customTheme}>{props.children}</MantineProvider>
+      {/* FIXME normaliseCSSが効かない */}
+      <MantineProvider theme={customTheme} withGlobalStyles withNormalizeCSS>
+        <Center>
+          <Center maw={390} h={"100vh"}>
+            {props.children}
+          </Center>
+        </Center>
+      </MantineProvider>
     </GlobalStyleProvider>
   );
 }

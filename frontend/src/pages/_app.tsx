@@ -16,7 +16,7 @@ export default function App({ Component, pageProps }: AppProps): ReactNode {
       </Head>
 
       <GlobalStyleProvider>
-        <MantineProvider theme={customTheme} withGlobalStyles withNormalizeCSS>
+        <MantineProvider theme={customTheme} withGlobalStyles>
           <Center>
             <Center maw={390} h={"100vh"}>
               <Component {...pageProps} />

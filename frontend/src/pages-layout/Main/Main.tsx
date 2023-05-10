@@ -25,20 +25,19 @@ export const Main: FC = () => {
       >
         <Logo size="large" />
       </Container>
-      <div>
-        <Container
-          sx={(theme: MantineTheme) => ({
-            position: "absolute",
-            bottom: theme.spacing.xl,
-            left: "50%",
-            transform: "translateX(-50%)",
-          })}
-        >
-          <Link href={""}>
-            <ActionButton disabled={false}>料理を見つける</ActionButton>
-          </Link>
-        </Container>
-      </div>
+      <Container
+        sx={(theme: MantineTheme) => ({
+          width: "100%",
+          position: "absolute",
+          bottom: theme.spacing.xl,
+          left: "50%",
+          transform: "translateX(-50%)",
+        })}
+      >
+        <Link href="#">
+          <ActionButton disabled={false}>料理を見つける</ActionButton>
+        </Link>
+      </Container>
     </>
   );
 };
