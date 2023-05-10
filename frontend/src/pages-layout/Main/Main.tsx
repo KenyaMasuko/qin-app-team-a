@@ -15,7 +15,16 @@ export const Main: FC = () => {
           content="Qin Salonのチーム開発で作成したレシピアプリ"
         />
       </Head>
-      <Logo size="large" />
+      <Container
+        sx={() => ({
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+        })}
+      >
+        <Logo size="large" />
+      </Container>
       <div>
         <Container
           sx={(theme: MantineTheme) => ({
