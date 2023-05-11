@@ -29,7 +29,7 @@ jobs:
         working-directory: frontend
 
       - name: Build Storybook
-        run: npm run chromatic
+        run: npm run build-storybook
         working-directory: frontend
 
       - name: Publish to Chromatic
