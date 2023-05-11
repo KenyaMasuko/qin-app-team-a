@@ -17,9 +17,10 @@ jobs:
 
       - name: Install dependencies
         run: npm
+        with:
+          workingDir: frontend
 
       - name: Publish Project to Chromatic
         uses: chromaui/action@v1
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-          workingDir: frontend
