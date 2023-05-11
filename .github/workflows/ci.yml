@@ -1,4 +1,4 @@
-name: "Chromatic"
+name: chromatic
 
 on:
   push:
@@ -11,17 +11,19 @@ on:
 
 jobs:
   chromatic-deployment:
+    name: Deploy Storybook to chromatic
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-
-      - name: Change Dir
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Change dir
         run: cd ./frontend
-
       - name: Install dependencies
-        run: npm
-
-      - name: Publish Project to Chromatic
+        run: npm ci
+      - name: Publish to Chromatic
         uses: chromaui/action@v1
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
