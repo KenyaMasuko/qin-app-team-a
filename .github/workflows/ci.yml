@@ -15,10 +15,11 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
+      - name: Change Dir
+        run: cd ./frontend
+
       - name: Install dependencies
         run: npm
-        with:
-          workingDir: frontend
 
       - name: Publish Project to Chromatic
         uses: chromaui/action@v1
