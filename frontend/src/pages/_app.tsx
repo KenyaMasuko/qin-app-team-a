@@ -1,5 +1,5 @@
 import { type ReactNode } from "react";
-import { Center, MantineProvider } from "@mantine/core";
+import { MantineProvider } from "@mantine/core";
 import { type AppProps } from "next/app";
 import Head from "next/head";
 import { GlobalStyleProvider, customTheme } from "@/lib/mantine";
@@ -17,11 +17,7 @@ export default function App({ Component, pageProps }: AppProps): ReactNode {
 
       <GlobalStyleProvider>
         <MantineProvider theme={customTheme} withGlobalStyles>
-          <Center>
-            <Center maw={390} h={"100vh"}>
-              <Component {...pageProps} />
-            </Center>
-          </Center>
+          <Component {...pageProps} />
         </MantineProvider>
       </GlobalStyleProvider>
     </>
