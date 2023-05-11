@@ -1,29 +1,40 @@
-name: chromatic
+name: "Chromatic Deployment"
 
 on:
   push:
     branches:
       - "develop"
-
+    paths:
+      - "frontend/**"
   pull_request:
     branches:
       - "develop"
+    paths:
+      - "frontend/**"
 
 jobs:
-  chromatic-deployment:
-    name: Deploy Storybook to chromatic
+  chromatic_deployment:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v2
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2
         with:
-          fetch-depth: 0
-      - name: Change dir
-        run: cd ./frontend
+          node-version: "16"
+
       - name: Install dependencies
         run: npm ci
+        working-directory: frontend
+
+      - name: Build Storybook
+        run: npm run chromatic
+        working-directory: frontend
+
       - name: Publish to Chromatic
         uses: chromaui/action@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          workingDir: frontend
