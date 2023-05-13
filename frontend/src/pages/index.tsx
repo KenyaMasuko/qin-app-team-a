@@ -1,4 +1,4 @@
-import { useState, ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { Button, Center, Flex, Image, Text, Title } from "@mantine/core";
 import Head from "next/head";
 
@@ -9,7 +9,7 @@ export default function Home(): ReactNode {
     imageUrl: string | undefined;
     text:
       | {
-          ingredients: { name: string; amount: string }[];
+          ingredients: Array<{ name: string; amount: string }>;
           steps: string[];
           tips: string[];
         }
@@ -128,7 +128,7 @@ export default function Home(): ReactNode {
             コレシピ！！！
           </Button>
           {isLoading && <p>Loading...</p>}
-          {error && <p>Error: {error.message}</p>}
+          {error != null && <p>Error: {error.message}</p>}
         </Flex>
       </Center>
     </>

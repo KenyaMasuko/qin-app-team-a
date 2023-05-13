@@ -8,15 +8,15 @@ export default function App({ Component, pageProps }: AppProps): ReactNode {
   return (
     <>
       <Head>
-        <title>Page title</title>
         <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <GlobalStyleProvider>
-        <MantineProvider theme={customTheme}>
+        <MantineProvider theme={customTheme} withGlobalStyles withNormalizeCSS>
           <Component {...pageProps} />
         </MantineProvider>
       </GlobalStyleProvider>
