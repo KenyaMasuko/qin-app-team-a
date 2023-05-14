@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { SPStory } from "@/lib/storybook/SPStory";
-import { recipeCardArgs } from "@/lib/storybook/recipeCardArgs";
+import { recipeCardArgs } from "@/lib/storybook/recipeArgs";
 import { RecipeCard } from "./RecipeCard";
 
 const meta: Meta<typeof RecipeCard> = {

@@ -1,5 +1,6 @@
 import type { FC } from "react";
 import { Text, Box, createStyles } from "@mantine/core";
+import { type Recipe } from "@/lib/types/recipe";
 
 const useStyles = createStyles<
   string,
@@ -45,17 +46,7 @@ const useStyles = createStyles<
   },
 }));
 
-export type RecipeCardProps = {
-  name: string;
-  imageUrl: string;
-  recipe: {
-    ingredients: Array<{
-      name: string;
-      amount: string;
-    }>;
-    steps: string[];
-    tips: string[];
-  };
+export type RecipeCardProps = Recipe & {
   onClick?: () => void;
 };
 
