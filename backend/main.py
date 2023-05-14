@@ -10,15 +10,18 @@ import uvicorn
 
 
 app = FastAPI()
+
+load_dotenv()
+origin = os.getenv("ORIGIN")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[origin],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-load_dotenv()
 openai_api_key = os.getenv("OPENAI_API_KEY")
 openai.api_key = openai_api_key
 
@@ -75,7 +78,6 @@ async def get_recipe_details_gpt(recipe: str) -> Union[str, dict]:
         return "Error: Unable to generate recipe details. Please try again."
 
     recipe_text = response.choices[0].text.strip()
-    print("recipe_text:", recipe_text)  # ログ出力
 
     def extract_list(text, keyword):
         split_text = re.split(f"{keyword}\s*?", text)

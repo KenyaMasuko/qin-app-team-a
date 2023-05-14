@@ -1,12 +1,22 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import fetch from "node-fetch";
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
   const { keywords } = req.query;
+  const apiUrl = process.env.API_URL;
+
+  if (typeof keywords !== 'string') {
+    res.status(400).json({ error: "Invalid keywords parameter" });
+    return;
+  }
+
+  if(apiUrl === undefined) {
+    throw new Error("API_URL is not defined");
+  }
 
   try {
     const response = await fetch(
-      `http://localhost:8000/api/recipe?keywords=${keywords}`
+      `${apiUrl}/api/recipe?keywords=${keywords}`
     );
     const data = await response.json();
 
