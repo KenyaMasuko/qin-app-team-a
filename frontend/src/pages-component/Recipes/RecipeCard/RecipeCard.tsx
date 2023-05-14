@@ -13,7 +13,7 @@ const useStyles = createStyles<
     height: 596,
     minWidth: 340,
     width: "100%",
-    cursor: params.onClick ? "pointer" : "",
+    cursor: params.onClick != null ? "pointer" : "",
   },
   filter: {
     display: "flex",
@@ -45,7 +45,7 @@ const useStyles = createStyles<
   },
 }));
 
-type RecipeProps = {
+export type RecipeCardProps = {
   name: string;
   imageUrl: string;
   recipe: {
@@ -59,7 +59,7 @@ type RecipeProps = {
   onClick?: () => void;
 };
 
-export const RecipeCard: FC<RecipeProps> = ({
+export const RecipeCard: FC<RecipeCardProps> = ({
   name,
   imageUrl,
   recipe,
