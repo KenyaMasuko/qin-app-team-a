@@ -114,8 +114,6 @@ async def get_recipe_details_gpt(recipe: str) -> Union[str, dict]:
         "tips": extract_list(recipe_text, "ポイント:"),
     }
 
-    print("recipe_dict:", recipe_dict)  # ログ出力
-
     logger.info("get_recipe_details_gpt finished")
     return recipe_dict
 
@@ -123,13 +121,9 @@ async def get_recipe_details_gpt(recipe: str) -> Union[str, dict]:
 @app.get("/api/recipe")
 async def recipe(keywords: str = Query(None)):
     try:
-        print("1")
         recommended_recipe = await get_recipe_gpt(keywords)
-        print("2")
         query_for_unsplash = await translate_recipe_to_english(recommended_recipe)
-        print("3")
         recipe_details = await get_recipe_details_gpt(recommended_recipe)
-        print("4")
 
         return {
             "name": recommended_recipe,
