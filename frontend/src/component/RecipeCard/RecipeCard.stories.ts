@@ -6,6 +6,9 @@ const meta: Meta<typeof RecipeCard> = {
   title: "Component/RecipeCard",
   component: RecipeCard,
   tags: ["autodocs"],
+  argTypes: {
+    onClick: { action: "clicked" },
+  },
 };
 
 export default meta;
@@ -70,5 +73,7 @@ export const Default: Story = {
         "砂糖と塩の量は、好みに合わせて調整してください。",
       ],
     },
+    onClick: () => {},
   },
 };
+
