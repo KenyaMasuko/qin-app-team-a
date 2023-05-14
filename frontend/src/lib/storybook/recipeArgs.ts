@@ -62,3 +62,8 @@ export const recipeCardArgs = {
   // eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/explicit-module-boundary-types
   onClick: () => {},
 };
+
+export const recipeImageArgs = {
+  ...name,
+  ...imageUrl,
+};
