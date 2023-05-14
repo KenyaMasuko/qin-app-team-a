@@ -1,0 +1,70 @@
+import type { FC } from "react";
+import { Text, Box, createStyles } from "@mantine/core";
+
+const useStyles = createStyles<string, { imageUrl: string }>(
+  (theme, params) => ({
+    card: {
+      backgroundImage: `url(${params.imageUrl})`,
+      backgroundSize: "cover",
+      borderRadius: 4,
+      overflow: "hidden",
+      height: 600,
+      minWidth: 374,
+      width: "100%",
+    },
+    filter: {
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "flex-end",
+      height: "100%",
+      background:
+        "linear-gradient(180deg, rgba(217, 217, 217, 0) -12.75%, rgba(137, 137, 137, 0) 3.92%, rgba(0, 0, 0, 0) 22.15%, rgba(0, 0, 0, 0) 37.25%, rgba(0, 0, 0, 0) 67.14%, rgba(0, 0, 0, 0) 73.19%, #000000 87.25%)",
+    },
+    textContainer: {
+      height: 100,
+      paddingLeft: theme.spacing.sm,
+      paddingTop: theme.spacing.lg,
+      paddingBottom: theme.spacing.lg,
+    },
+    nameText: {
+      color: theme.colors.text[3],
+      fontSize: theme.fontSizes.md,
+      fontWeight: 700,
+    },
+    ingredientsText: {
+      color: theme.colors.text[3],
+      fontSize: theme.fontSizes.sm,
+      fontWeight: 700,
+    },
+  })
+);
+
+type RecipeProps = {
+  name: string;
+  imageUrl: string;
+  recipe: {
+    ingredients: Array<{
+      name: string;
+      amount: string;
+    }>;
+    steps: string[];
+    tips: string[];
+  };
+};
+
+export const RecipeCard: FC<RecipeProps> = ({ name, imageUrl, recipe }) => {
+  const { classes } = useStyles({ imageUrl });
+  const ingredients = recipe.ingredients
+    .map((ingredient) => ingredient.name)
+    .join("、");
+  return (
+    <Box className={classes.card}>
+      <Box className={classes.filter}>
+        <Box className={classes.textContainer}>
+          <Text className={classes.nameText}>{name}</Text>
+          <Text className={classes.ingredientsText}>{ingredients}</Text>
+        </Box>
+      </Box>
+    </Box>
+  );
+};

@@ -7,7 +7,7 @@ export default function Home(): ReactNode {
   const [recipe, setRecipe] = useState<{
     name: string | undefined;
     imageUrl: string | undefined;
-    text:
+    recipe:
       | {
           ingredients: Array<{ name: string; amount: string }>;
           steps: string[];
@@ -17,7 +17,7 @@ export default function Home(): ReactNode {
   }>({
     name: undefined,
     imageUrl: undefined,
-    text: undefined,
+    recipe: undefined,
   });
 
   const [error, setError] = useState<Error | null>(null);
@@ -43,7 +43,7 @@ export default function Home(): ReactNode {
       setRecipe({
         name: "何の成果も！！得られませんでした！！",
         imageUrl: undefined,
-        text: undefined,
+        recipe: undefined,
       });
     } finally {
       setIsLoading(false);

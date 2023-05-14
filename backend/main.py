@@ -134,7 +134,7 @@ async def recipe(keywords: str = Query(None)):
         return {
             "name": recommended_recipe,
             "imageUrl": f"https://source.unsplash.com/featured/?{query_for_unsplash}",
-            "text": recipe_details,
+            "recipe": recipe_details,
         }
     except Exception as e:
         logger.error(f"Error: {e}")
