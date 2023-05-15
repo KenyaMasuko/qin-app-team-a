@@ -10,15 +10,18 @@ import uvicorn
 
 
 app = FastAPI()
+
+load_dotenv()
+origin = os.getenv("ORIGIN")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[origin],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-load_dotenv()
 openai_api_key = os.getenv("OPENAI_API_KEY")
 openai.api_key = openai_api_key
 
@@ -75,7 +78,6 @@ async def get_recipe_details_gpt(recipe: str) -> Union[str, dict]:
         return "Error: Unable to generate recipe details. Please try again."
 
     recipe_text = response.choices[0].text.strip()
-    print("recipe_text:", recipe_text)  # ログ出力
 
     def extract_list(text, keyword):
         split_text = re.split(f"{keyword}\s*?", text)
@@ -114,8 +116,6 @@ async def get_recipe_details_gpt(recipe: str) -> Union[str, dict]:
         "tips": extract_list(recipe_text, "ポイント:"),
     }
 
-    print("recipe_dict:", recipe_dict)  # ログ出力
-
     logger.info("get_recipe_details_gpt finished")
     return recipe_dict
 
@@ -123,13 +123,9 @@ async def get_recipe_details_gpt(recipe: str) -> Union[str, dict]:
 @app.get("/api/recipe")
 async def recipe(keywords: str = Query(None)):
     try:
-        print("1")
         recommended_recipe = await get_recipe_gpt(keywords)
-        print("2")
         query_for_unsplash = await translate_recipe_to_english(recommended_recipe)
-        print("3")
         recipe_details = await get_recipe_details_gpt(recommended_recipe)
-        print("4")
 
         return {
             "name": recommended_recipe,
