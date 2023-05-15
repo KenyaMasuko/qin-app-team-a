@@ -1,8 +1,16 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import fetch from "node-fetch";
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { keywords } = req.query;
+const handler = async (
+  req: NextApiRequest,
+  res: NextApiResponse
+): Promise<void> => {
+  if (typeof req.query.keywords !== "string") {
+    res.status(400).json({ error: "Your keywords are something went wrong" });
+    return;
+  }
+
+  const keywords = req.query.keywords;
 
   try {
     const response = await fetch(
