@@ -75,10 +75,10 @@ export const RecipeDetails: FC<RecipeDetailsProps> = ({
           </List.Item>
         ))}
       </List>
-      <Title order={2} size={theme.fontSizes.xs}>
+      <Title order={2} size={theme.fontSizes.xs} mb={4}>
         【tips】
       </Title>
-      <Text size={theme.fontSizes.xs} fw={600}>
+      <Text size={theme.fontSizes.xs} fw={600} sx={{ lineHeight: 2.325 }}>
         {tips.join("")}
       </Text>
     </>
