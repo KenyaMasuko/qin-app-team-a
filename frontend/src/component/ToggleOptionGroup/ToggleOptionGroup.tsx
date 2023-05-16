@@ -14,7 +14,7 @@ type ToggleOptionGroupProps = {
 };
 
 const _ToggleOptionGroup = forwardRef<HTMLDivElement, ToggleOptionGroupProps>(
-  ({ children, onClickOption = (child) => {}, ...others }, ref) => (
+  ({ children, onClickOption, ...others }, ref) => (
     <Chip.Group multiple {...others}>
       <Group ref={ref} style={{ gap: "1rem 0.5rem" }}>
         {children.map((child) => (
@@ -22,7 +22,9 @@ const _ToggleOptionGroup = forwardRef<HTMLDivElement, ToggleOptionGroupProps>(
             key={child}
             value={child}
             onClick={() => {
-              onClickOption(child);
+              if (onClickOption != null) {
+                onClickOption(child);
+              }
             }}
           >
             {child}

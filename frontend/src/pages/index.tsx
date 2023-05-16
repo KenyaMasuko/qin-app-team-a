@@ -2,19 +2,21 @@ import { useState, type ReactNode } from "react";
 import { Button, Center, Flex, Image, Text, Title } from "@mantine/core";
 import Head from "next/head";
 
+type Recipe = {
+  name: string | undefined;
+  imageUrl: string | undefined;
+  text:
+    | {
+        ingredients: Array<{ name: string; amount: string }>;
+        steps: string[];
+        tips: string[];
+      }
+    | undefined;
+}
+
 export default function Home(): ReactNode {
   const [keywords, setKeywords] = useState<string | undefined>(undefined);
-  const [recipe, setRecipe] = useState<{
-    name: string | undefined;
-    imageUrl: string | undefined;
-    text:
-      | {
-          ingredients: Array<{ name: string; amount: string }>;
-          steps: string[];
-          tips: string[];
-        }
-      | undefined;
-  }>({
+  const [recipe, setRecipe] = useState<Recipe>({
     name: undefined,
     imageUrl: undefined,
     text: undefined,
@@ -29,14 +31,14 @@ export default function Home(): ReactNode {
     setError(null);
 
     try {
-      if (!keywords) return;
+      if (keywords == null) return;
       const response = await fetch(
         `/api/recipe?keywords=${encodeURIComponent(keywords)}`
       );
       if (!response.ok) {
         throw new Error("An error occurred while fetching the data.");
       }
-      const newData = await response.json();
+      const newData = await response.json() as Recipe;
       setRecipe(newData);
     } catch (error) {
       setError(error as Error);
@@ -68,9 +70,9 @@ export default function Home(): ReactNode {
           wrap="nowrap"
         >
           <Title sx={{ color: "red" }}>{`Hello World ${
-            recipe.name ? recipe.name : "たかし"
+            recipe.name != null ? recipe.name : "たかし"
           }`}</Title>
-          {recipe.imageUrl ? (
+          {recipe.imageUrl != null ? (
             <Image
               maw={500}
               h={500}
