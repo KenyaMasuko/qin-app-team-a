@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import { Text, Box, createStyles } from "@mantine/core";
-import { type Recipe } from "@/lib/types/recipe";
+import { type Recipe } from "@/types/recipe";
 
 const useStyles = createStyles<
   string,

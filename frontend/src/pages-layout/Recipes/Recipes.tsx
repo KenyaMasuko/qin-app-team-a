@@ -1,7 +1,7 @@
 import { useState, type FC } from "react";
-import { type Recipe } from "@/lib/types/recipe";
 import { RecipeDetail } from "@/pages-component/RecipeDetail/RecipeDetail/RecipeDetail";
 import { RecipeRecommender } from "@/pages-component/RecipeRecommender/RecipeRecommender/RecipeRecommender";
+import { type Recipe } from "@/types/recipe";
 
 type ReicipesProps = Recipe;
 

@@ -57,21 +57,3 @@ export const recipe = {
   ],
 };
 
-export const recipeCardArgs = {
-  ...name,
-  ...imageUrl,
-  recipe,
-  // eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/explicit-module-boundary-types
-  onClick: () => {},
-};
-
-export const recipeImageArgs = {
-  ...name,
-  ...imageUrl,
-};
-
-export const recipeDetailArgs = {
-  ...name,
-  ...imageUrl,
-  recipe,
-};

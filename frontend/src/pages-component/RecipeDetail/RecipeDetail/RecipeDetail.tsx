@@ -1,9 +1,9 @@
 import { type FC } from "react";
 import { ActionIcon, Box, Header, Space } from "@mantine/core";
 import { ArrowLeft } from "tabler-icons-react";
-import { type Recipe } from "@/lib/types/recipe";
 import { RecipeImage } from "@/pages-component/RecipeDetail/RecipeImage/RecipeImage";
 import { RecipeText } from "@/pages-component/RecipeDetail/RecipeText/RecipeText";
+import { type Recipe } from "@/types/recipe";
 
 type RecipeDetailProps = Recipe & {
   returnToPreviousPage: () => void;

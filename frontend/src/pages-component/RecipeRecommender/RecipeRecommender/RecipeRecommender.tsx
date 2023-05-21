@@ -2,8 +2,8 @@ import { type FC } from "react";
 import { Anchor, Box, Flex, Header, Space } from "@mantine/core";
 import Link from "next/link";
 import { ActionButton } from "@/component/ActionButton/ActionButton";
-import { type Recipe } from "@/lib/types/recipe";
 import { RecipeCard } from "@/pages-component/RecipeRecommender/RecipeCard/RecipeCard";
+import { type Recipe } from "@/types/recipe";
 
 type RecipeRecommenderProps = Recipe & {
   showDetailPage: () => void;
