@@ -26,7 +26,9 @@ const _ToggleOptionGroup = forwardRef<HTMLDivElement, ToggleOptionGroupProps>(
             key={child}
             value={child}
             onClick={() => {
-              onClickOption(child);
+              if (onClickOption != null) {
+                onClickOption(child);
+              }
             }}
           >
             {child}
