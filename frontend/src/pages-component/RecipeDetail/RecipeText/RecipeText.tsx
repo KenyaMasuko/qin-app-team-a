@@ -1,7 +1,7 @@
 import { type FC } from "react";
 import { List, Text, Title, useMantineTheme } from "@mantine/core";
 
-type RecipeDetailsProps = {
+type RecipeTextProps = {
   /**
    * 材料
    */
@@ -20,7 +20,7 @@ type RecipeDetailsProps = {
   tips: string[];
 };
 
-export const RecipeDetails: FC<RecipeDetailsProps> = ({
+export const RecipeText: FC<RecipeTextProps> = ({
   ingredients,
   steps,
   tips,

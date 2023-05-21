@@ -1,6 +1,8 @@
-const name = { name: "カレーライス" };
-const imageUrl = { imageUrl: "https://source.unsplash.com/featured/?curry" };
-const recipe = {
+export const name = { name: "カレーライス" };
+export const imageUrl = {
+  imageUrl: "https://source.unsplash.com/featured/?curry",
+};
+export const recipe = {
   ingredients: [
     {
       name: "玉ねぎ",

@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { SPStory } from "@/lib/storybook/SPStory";
-import { recipeCardArgs } from "@/lib/storybook/recipeArgs";
-import { Recipes } from "@/pages-layout/Recipes/Recipes";
+import { imageUrl, recipe, name } from "@/lib/storybook/recipeArgs";
+import { Recipes } from "./Recipes";
 
 const meta: Meta<typeof Recipes> = {
   title: "Page-layout/Recipes",
@@ -10,16 +10,21 @@ const meta: Meta<typeof Recipes> = {
   tags: ["autodocs"],
 };
 
-export default meta;
+const recipesArgs = {
+  ...name,
+  ...imageUrl,
+  recipe,
+};
 
+export default meta;
 type Story = StoryObj<typeof Recipes>;
 
 export const Default: Story = {
   parameters: {
     ...SPStory.parameters,
   },
-  args: recipeCardArgs,
+  args: recipesArgs,
 };
 export const PCDefault: Story = {
-  args: recipeCardArgs,
+  args: recipesArgs,
 };

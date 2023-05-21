@@ -1,40 +1,35 @@
-import { type FC } from "react";
-import { Anchor, Box, Flex, Header, Space } from "@mantine/core";
-import { ActionButton } from "@/component/ActionButton/ActionButton";
-import {
-  RecipeCard,
-  type RecipeCardProps,
-} from "@/pages-component/Recipes/RecipeCard/RecipeCard";
+import { useState, type FC } from "react";
+import { type Recipe } from "@/lib/types/recipe";
+import { RecipeDetail } from "@/pages-component/RecipeDetail/RecipeDetail/RecipeDetail";
+import { RecipeRecommender } from "@/pages-component/RecipeRecommender/RecipeRecommender/RecipeRecommender";
 
-type RecipeProps = RecipeCardProps;
+type ReicipesProps = Recipe;
 
-export const Recipes: FC<RecipeProps> = ({
-  name,
-  imageUrl,
-  recipe,
-  onClick,
-}) => {
+type ViewState = "recommend" | "detail";
+
+export const Recipes: FC<ReicipesProps> = ({ name, imageUrl, recipe }) => {
+  const [viewState, setViewState] = useState<ViewState>("recommend");
   return (
-    <main>
-      <Box pt={48} px="xs" pb={56}>
-        <Header height="2rem" withBorder={false}>
-          <Flex justify="flex-end">
-            <Anchor color="text.1">気分を入れ直す</Anchor>
-          </Flex>
-        </Header>
-        <Space h="lg" />
-        <RecipeCard
+    <>
+      {viewState === "recommend" ? (
+        <RecipeRecommender
           name={name}
           imageUrl={imageUrl}
           recipe={recipe}
-          onClick={onClick}
+          showDetailPage={() => {
+            setViewState("detail");
+          }}
         />
-        <Space h="xl" />
-        <Flex gap="xs">
-          <ActionButton>レシピを見る</ActionButton>
-          <ActionButton>別の料理を見る</ActionButton>
-        </Flex>
-      </Box>
-    </main>
+      ) : (
+        <RecipeDetail
+          name={name}
+          imageUrl={imageUrl}
+          recipe={recipe}
+          returnToPreviousPage={() => {
+            setViewState("recommend");
+          }}
+        />
+      )}
+    </>
   );
 };

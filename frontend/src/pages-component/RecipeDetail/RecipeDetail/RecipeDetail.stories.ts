@@ -1,10 +1,10 @@
 import { type Meta, type StoryObj } from "@storybook/react";
 import { SPStory } from "@/lib/storybook/SPStory";
 import { recipeDetailArgs } from "@/lib/storybook/recipeArgs";
-import { RecipeDetail } from "@/pages-layout/RecipeDetail/RecipeDetail";
+import { RecipeDetail } from "@/pages-component/RecipeDetail/RecipeDetail/RecipeDetail";
 
 const meta: Meta<typeof RecipeDetail> = {
-  title: "Page-layout/RecipeDetail",
+  title: "Component/RecipeDetail",
   component: RecipeDetail,
   tags: ["autodocs"],
 };
