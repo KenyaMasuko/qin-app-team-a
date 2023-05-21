@@ -67,3 +67,9 @@ export const recipeImageArgs = {
   ...name,
   ...imageUrl,
 };
+
+export const recipeDetailArgs = {
+  ...name,
+  ...imageUrl,
+  recipe,
+};
