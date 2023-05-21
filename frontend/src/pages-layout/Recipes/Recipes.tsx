@@ -17,8 +17,10 @@ export const Recipes: FC<RecipeProps> = ({
   return (
     <main>
       <Box pt={48} px="xs" pb={56}>
-        <Header height={24}>
-          <Anchor>気分を入れ直す</Anchor>
+        <Header height="2rem" withBorder={false}>
+          <Flex justify="flex-end">
+            <Anchor color="text.1">気分を入れ直す</Anchor>
+          </Flex>
         </Header>
         <Space h="lg" />
         <RecipeCard
