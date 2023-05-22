@@ -4,7 +4,7 @@ import { type AppProps } from "next/app";
 import Head from "next/head";
 import { type Fetcher, SWRConfig } from "swr";
 import { GlobalStyleProvider, customTheme } from "@/lib/mantine";
-import { type Recipe } from "@/types";
+import { type Recipe } from "@/types/recipe";
 
 const fetcher: Fetcher<Recipe, string> = async (url) => {
   const res = await fetch(url);
