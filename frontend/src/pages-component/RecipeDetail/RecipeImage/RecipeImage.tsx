@@ -5,12 +5,11 @@ import { type Recipe } from "@/types/recipe";
 const useStyles = createStyles<string, { imageUrl: string }>(
   (theme, params) => ({
     card: {
+      aspectRatio: "374 / 298",
       backgroundImage: `url(${params.imageUrl})`,
       backgroundSize: "cover",
       borderRadius: 8,
       overflow: "hidden",
-      height: 298,
-      minWidth: 340,
       width: "100%",
     },
     filter: {
