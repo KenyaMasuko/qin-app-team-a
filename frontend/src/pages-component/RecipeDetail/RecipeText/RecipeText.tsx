@@ -67,13 +67,17 @@ export const RecipeText: FC<RecipeTextProps> = ({
           },
         })}
       >
-        {steps.map((step) => (
-          <List.Item key={step}>
-            <Text size={theme.fontSizes.xs} fw={600}>
-              {step}
-            </Text>
-          </List.Item>
-        ))}
+        {steps.map((step, i) => {
+          const digit = String(i + 1).length;
+          return (
+            // 2桁以上の時、画面幅を超えるのでその文字数分右にmarginをとる
+            <List.Item key={step} mr={`${digit - 1}em`}>
+              <Text size={theme.fontSizes.xs} fw={600}>
+                {step}
+              </Text>
+            </List.Item>
+          );
+        })}
       </List>
       <Title order={2} size={theme.fontSizes.xs} mb={4}>
         【tips】
