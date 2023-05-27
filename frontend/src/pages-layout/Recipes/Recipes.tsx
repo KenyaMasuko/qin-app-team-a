@@ -1,6 +1,7 @@
 import { useState, type FC } from "react";
-import { Loader } from "@mantine/core";
+import { Alert, Center, Loader } from "@mantine/core";
 import { useRouter } from "next/router";
+import { AlertCircle } from "tabler-icons-react";
 import { useFetchRecipe } from "@/hooks/useData";
 import { useDecodeURI } from "@/hooks/useDocodeURI";
 import { RecipeDetail } from "@/pages-component/RecipeDetail/RecipeDetail/RecipeDetail";
@@ -16,7 +17,9 @@ export const Recipes: FC = () => {
 
   const [viewState, setViewState] = useState<ViewState>("recommend");
   return isLoading ? (
-    <Loader />
+    <Center mih={"100vh"}>
+      <Loader color={"brand.1"} size={"xl"} />
+    </Center>
   ) : recipe != null ? (
     <>
       {viewState === "recommend" ? (
@@ -40,8 +43,12 @@ export const Recipes: FC = () => {
       )}
     </>
   ) : error != null ? (
-    <p>{error.message}</p>
-  ) : (
-    <p>test</p>
-  );
+    <Alert
+      icon={<AlertCircle size="1rem" />}
+      title="データの取得に失敗しました"
+      color="red"
+    >
+      リロードしてください
+    </Alert>
+  ) : null;
 };
