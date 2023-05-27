@@ -7,12 +7,12 @@ const useStyles = createStyles<
   { imageUrl: string; onClick?: () => void }
 >((theme, params) => ({
   card: {
+    aspectRatio: "374 / 596",
     backgroundImage: `url(${params.imageUrl})`,
+    backgroundPosition: "center",
     backgroundSize: "cover",
     borderRadius: 8,
     overflow: "hidden",
-    height: 596,
-    minWidth: 340,
     width: "100%",
     cursor: params.onClick != null ? "pointer" : "",
   },
