@@ -8,6 +8,7 @@ export const GlobalStyleProvider: FC<{ children: ReactNode }> = ({
     <>
       <Global
         styles={{
+          body: { padding: "0 !important" },
           "*": { wordBreak: "break-all" },
           'button, *[type="button"]': { transform: "none !important" },
         }}

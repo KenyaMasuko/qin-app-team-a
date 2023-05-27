@@ -9,11 +9,11 @@ type ActionButtonProps = {
   /**
    * disabled
    */
-  disabled: boolean;
+  disabled?: boolean;
 };
 
 const _ActionButton = forwardRef<HTMLButtonElement, ActionButtonProps>(
-  ({ children, disabled, ...others }, ref) => (
+  ({ children, disabled = false, ...others }, ref) => (
     <Button
       ref={ref}
       color="brand.1"

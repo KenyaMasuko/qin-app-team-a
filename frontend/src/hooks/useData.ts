@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import { useEncodeURI } from "@/hooks/useEncodeURI";
-import { type Recipe } from "@/types";
+import { type Recipe } from "@/types/recipe";
 
 type FetchRecipeReturnType = {
   data: Recipe | undefined;

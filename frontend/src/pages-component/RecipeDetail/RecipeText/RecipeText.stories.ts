@@ -1,16 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/react";
-
-import { RecipeDetails } from "./RecipeDetails";
+import { RecipeText } from "@/pages-component/RecipeDetail/RecipeText/RecipeText";
 
 // More on how to set up stories at: https://storybook.js.org/docs/7.0/react/writing-stories/introduction
-const meta: Meta<typeof RecipeDetails> = {
-  title: "Component/RecipeDetails",
-  component: RecipeDetails,
+const meta: Meta<typeof RecipeText> = {
+  title: "Component/RecipeText",
+  component: RecipeText,
   tags: ["autodocs"],
 };
 
 export default meta;
-type Story = StoryObj<typeof RecipeDetails>;
+type Story = StoryObj<typeof RecipeText>;
 
 // More on writing stories with args: https://storybook.js.org/docs/7.0/react/writing-stories/args
 
