@@ -1,5 +1,4 @@
 import useSWR from "swr";
-import { useEncodeURI } from "@/hooks/useEncodeURI";
 import { type Recipe } from "@/types/recipe";
 
 type FetchRecipeReturnType = {
@@ -10,7 +9,14 @@ type FetchRecipeReturnType = {
 
 export const useFetchRecipe = (selected: string[]): FetchRecipeReturnType => {
   const { data, isLoading, error } = useSWR<Recipe, Error>(
-    `/api/recipe?keywords=${useEncodeURI(selected)}`
+    "recipe",
+    async () => {
+      const res = await fetch(
+        `/api/recipe?keywords=${encodeURI(selected.join(" "))}`
+      );
+      const data = (await res.json()) as Recipe;
+      return data;
+    }
   );
 
   return { data, isLoading, error };

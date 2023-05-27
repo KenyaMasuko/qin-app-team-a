@@ -9,15 +9,7 @@ const meta: Meta<typeof Recipes> = {
   tags: ["autodocs"],
   parameters: {
     ...SPStory.parameters,
-    msw: handlers,
-    nextjs: {
-      navigation: {
-        pathname: "/recipes",
-        query: {
-          keywords: "肉料理 米 野菜たっぷり",
-        },
-      },
-    },
+    msw: { handlers },
   },
 };
 
@@ -27,27 +19,6 @@ type Story = StoryObj<typeof Recipes>;
 export const Default: Story = {
   parameters: {
     ...SPStory.parameters,
-    msw: handlers,
-    nextjs: {
-      navigation: {
-        pathname: "/recipes",
-        query: {
-          keywords: "肉料理 米 野菜たっぷり",
-        },
-      },
-    },
   },
 };
-export const PCDefault: Story = {
-  parameters: {
-    msw: handlers,
-    nextjs: {
-      navigation: {
-        pathname: "/recipes",
-        query: {
-          keywords: "肉料理 米 野菜たっぷり",
-        },
-      },
-    },
-  },
-};
+export const PCDefault: Story = {};

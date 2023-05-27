@@ -60,7 +60,7 @@ export const recipe = {
 };
 
 export const handlers = [
-  rest.get("/api/recipes", async (req, res, ctx) => {
+  rest.get("/api/recipe", async (req, res, ctx) => {
     return await res(
       ctx.status(200),
       ctx.json({
