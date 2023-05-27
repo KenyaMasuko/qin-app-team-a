@@ -1,35 +1,47 @@
 import { useState, type FC } from "react";
+import { Loader } from "@mantine/core";
+import { useRouter } from "next/router";
+import { useFetchRecipe } from "@/hooks/useData";
+import { useDecodeURI } from "@/hooks/useDocodeURI";
 import { RecipeDetail } from "@/pages-component/RecipeDetail/RecipeDetail/RecipeDetail";
 import { RecipeRecommender } from "@/pages-component/RecipeRecommender/RecipeRecommender/RecipeRecommender";
-import { type Recipe } from "@/types/recipe";
-
-type ReicipesProps = Recipe;
 
 type ViewState = "recommend" | "detail";
 
-export const Recipes: FC<ReicipesProps> = ({ name, imageUrl, recipe }) => {
+export const Recipes: FC = () => {
+  const router = useRouter();
+  const { keywords } = router.query;
+  const keywordList = useDecodeURI(keywords as string);
+  const { data: recipe, isLoading, error } = useFetchRecipe(keywordList);
+
   const [viewState, setViewState] = useState<ViewState>("recommend");
-  return (
+  return isLoading ? (
+    <Loader />
+  ) : recipe != null ? (
     <>
       {viewState === "recommend" ? (
         <RecipeRecommender
-          name={name}
-          imageUrl={imageUrl}
-          recipe={recipe}
+          name={recipe.name}
+          imageUrl={recipe.imageUrl}
+          recipe={recipe.recipe}
           showDetailPage={() => {
             setViewState("detail");
           }}
         />
       ) : (
         <RecipeDetail
-          name={name}
-          imageUrl={imageUrl}
-          recipe={recipe}
+          name={recipe.name}
+          imageUrl={recipe.imageUrl}
+          recipe={recipe.recipe}
           returnToPreviousPage={() => {
             setViewState("recommend");
           }}
         />
       )}
     </>
+  ) : error != null ? (
+    <p>{error.message}</p>
+  ) : (
+    <p>test</p>
   );
 };
