@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ArrowNarrowLeft } from "tabler-icons-react";
 import { ActionButton } from "@/component/ActionButton/ActionButton";
 import { ToggleOptionGroup } from "@/component/ToggleOptionGroup/ToggleOptionGroup";
-import { useEncodeURI } from "@/hooks/useEncodeURI";
+import { encodeQueryParam } from "@/hooks/useData";
 import { CenterChildren } from "@/pages-component/CenterChildren";
 import { SearchLink } from "@/pages-component/SearchLink";
 
@@ -14,7 +14,7 @@ export const Select: FC = () => {
 
   const [selected, setSelected] = useState<string[]>([]);
 
-  const encodedKeywords = useEncodeURI(selected);
+  const encodedKeywords = encodeQueryParam(selected);
 
   const options = [
     "肉料理",
