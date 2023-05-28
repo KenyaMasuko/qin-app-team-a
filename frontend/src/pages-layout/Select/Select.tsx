@@ -8,30 +8,30 @@ import { ToggleOptionGroup } from "@/component/ToggleOptionGroup/ToggleOptionGro
 import { CenterChildren } from "@/pages-component/CenterChildren";
 import { SearchLink } from "@/pages-component/SearchLink";
 
+const options = [
+  "肉料理",
+  "魚料理",
+  "サラダ",
+  "麺",
+  "米",
+  "パン",
+  "野菜たっぷり",
+  "ヘルシー",
+  "タンパク質多め",
+  "パーティー料理",
+  "和食",
+  "韓国料理",
+  "中華料理",
+  "イタリアン",
+  "揚げ物",
+];
+
 export const Select: FC = () => {
   const theme = useMantineTheme();
 
   const [selected, setSelected] = useState<string[]>([]);
 
   const encodedKeywords = encodeURI(selected.join(" "));
-
-  const options = [
-    "肉料理",
-    "魚料理",
-    "サラダ",
-    "麺",
-    "米",
-    "パン",
-    "野菜たっぷり",
-    "ヘルシー",
-    "タンパク質多め",
-    "パーティー料理",
-    "和食",
-    "韓国料理",
-    "中華料理",
-    "イタリアン",
-    "揚げ物",
-  ];
 
   return (
     <>
