@@ -38,7 +38,7 @@ export const Main: FC = () => {
           </Container>
 
           <Link
-            href="#"
+            href="/select"
             style={{
               width: "100%",
               textDecoration: "none",
