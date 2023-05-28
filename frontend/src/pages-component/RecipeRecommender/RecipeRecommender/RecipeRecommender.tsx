@@ -35,7 +35,7 @@ export const RecipeRecommender: FC<RecipeRecommenderProps> = ({
         <Space h="lg" />
         <RecipeCard
           name={name}
-          imageUrl={imageUrl}
+          imageUrl={encodeURI(imageUrl)}
           recipe={recipe}
           onClick={showDetailPage}
         />

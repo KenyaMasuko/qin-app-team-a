@@ -24,7 +24,7 @@ export const RecipeDetail: FC<RecipeDetailProps> = ({
           </ActionIcon>
         </Header>
         <Space h="lg" />
-        <RecipeImage name={name} imageUrl={imageUrl} />
+        <RecipeImage name={name} imageUrl={encodeURI(imageUrl)} />
         <Space h="lg" />
         <RecipeText {...recipe} />
       </Box>
