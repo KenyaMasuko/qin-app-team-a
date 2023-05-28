@@ -69,11 +69,12 @@ export const Select: FC = () => {
             <Text fz="sm" c="text.0" fw="bold">
               当てはまるものを5つまで選んでね
             </Text>
+
             <Space h="lg" />
             <ToggleOptionGroup onChange={setSelected}>
               {options.map((option) => option)}
             </ToggleOptionGroup>
-            {selected.length === 0 ? (
+            {selected.length === 0 || selected.length >= 6 ? (
               <div
                 style={{
                   width: "100%",
