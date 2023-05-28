@@ -88,7 +88,7 @@ export const Select: FC = () => {
             ) : (
               <SearchLink
                 query={encodedKeywords}
-                isSelect={selected.length === 0}
+                isSelect={selected.length !== 0}
               />
             )}
           </Container>
