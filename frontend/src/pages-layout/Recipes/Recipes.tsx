@@ -1,22 +1,18 @@
 import { useState, type FC } from "react";
 import { Alert, Center, Loader } from "@mantine/core";
-import { useRouter } from "next/router";
 import { AlertCircle } from "tabler-icons-react";
 import { useFetchRecipe } from "@/hooks/useData";
-import { useDecodeURI } from "@/hooks/useDocodeURI";
 import { RecipeDetail } from "@/pages-component/RecipeDetail/RecipeDetail/RecipeDetail";
 import { RecipeRecommender } from "@/pages-component/RecipeRecommender/RecipeRecommender/RecipeRecommender";
 
 type ViewState = "recommend" | "detail";
 
 export const Recipes: FC = () => {
-  const router = useRouter();
-  const { keywords } = router.query;
-  const keywordList = useDecodeURI(keywords as string);
-  const { data: recipe, isLoading, error } = useFetchRecipe(keywordList);
+  const { data: recipe, isValidating, error, getNextRecipe } = useFetchRecipe();
 
   const [viewState, setViewState] = useState<ViewState>("recommend");
-  return isLoading ? (
+
+  return isValidating ? (
     <Center mih={"100vh"}>
       <Loader color={"brand.1"} size={"xl"} />
     </Center>
@@ -30,6 +26,7 @@ export const Recipes: FC = () => {
           showDetailPage={() => {
             setViewState("detail");
           }}
+          getNextRecipe={getNextRecipe}
         />
       ) : (
         <RecipeDetail

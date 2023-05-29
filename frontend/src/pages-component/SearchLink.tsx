@@ -27,7 +27,7 @@ export const SearchLink: FC<Props> = (props) => {
         transform: "translateX(-50%)",
       }}
     >
-      <ActionButton disabled={isSelect}>探す</ActionButton>
+      <ActionButton disabled={!isSelect}>探す</ActionButton>
     </Link>
   );
 };

@@ -18,8 +18,10 @@ const RecipeRecommenderArgs = {
   ...name,
   ...imageUrl,
   recipe,
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-empty-function
-  showDetailPage: () => {},
+  showDetailPage: (): void => {
+    console.log("Show detail page function called");
+  },
+  nextRecipeLink: "#",
 };
 
 export const Default: Story = {
