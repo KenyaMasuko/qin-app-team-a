@@ -7,6 +7,7 @@ import { type Recipe } from "@/types/recipe";
 
 type RecipeRecommenderProps = Recipe & {
   showDetailPage: () => void;
+  getNextRecipe: (currentRecipeName: string) => void;
 };
 
 export const RecipeRecommender: FC<RecipeRecommenderProps> = ({
@@ -14,6 +15,7 @@ export const RecipeRecommender: FC<RecipeRecommenderProps> = ({
   imageUrl,
   recipe,
   showDetailPage,
+  getNextRecipe,
 }) => {
   return (
     <main>
@@ -42,7 +44,13 @@ export const RecipeRecommender: FC<RecipeRecommenderProps> = ({
         <Space h="xl" />
         <Flex gap="xs">
           <ActionButton onClick={showDetailPage}>レシピを見る</ActionButton>
-          <ActionButton>別の料理を見る</ActionButton>
+          <ActionButton
+            onClick={() => {
+              getNextRecipe(name);
+            }}
+          >
+            別の料理を見る
+          </ActionButton>
         </Flex>
       </Box>
     </main>

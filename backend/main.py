@@ -145,6 +145,7 @@ async def get_recipe_details_gpt(recipe: str) -> Union[str, dict]:
 async def recipe(
     keywords: str = Query(None), existingRecipeNames: Optional[List[str]] = Query(None)
 ):
+    logger.info(f'{existingRecipeNames}')
     try:
         recommended_recipe = await get_recipe_gpt(keywords, existingRecipeNames)
         query_for_unsplash = await translate_recipe_to_english(recommended_recipe)
